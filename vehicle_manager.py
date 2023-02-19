@@ -80,7 +80,7 @@ class VehicleManager(ApiManager):
 
         requests.delete(self.url + VehicleManager.vehicles_adress + f'/{id}')
 
-    def get_distance(self, id1, id2):
+    def get_distance(self, id1: int, id2: int) -> float:
         # Получаем оба id
         # Взовращаем расстояние между двумя vehicle по id
         # получаем 2 vehicle
@@ -90,7 +90,7 @@ class VehicleManager(ApiManager):
         return self.calc_distance_behavior.calc_distance(vehicle1.longitude, vehicle1.latitude, vehicle2.longitude,
                                                          vehicle2.latitude)
 
-    def get_nearest_vehicle(self, id):
+    def get_nearest_vehicle(self, id: int) -> float:
         # получить близжайший vehicle по id
 
         vehicle1 = self.get_vehicle(id)
