@@ -38,7 +38,7 @@ class Vehicle:
 
 class VehicleManager(ApiManager):
     vehicles_adress = '/vehicles'
-    calc_distance_behavior: DistanceTwoGeopoints = MyDistanceTwoGeopoints()  # способ подсчета растояния
+    calc_distance_behavior: DistanceTwoGeopoints = MyDistanceTwoGeopoints()  # способ подсчета расстояния
 
     def get_vehicles(self) -> list[Vehicle]:
         # получить список всех автомобилей
@@ -54,15 +54,17 @@ class VehicleManager(ApiManager):
         filter_list = []
         vehicle_list = self.get_vehicles()
         for vehicle in vehicle_list:
-            if params.items() <= vehicle.__dict__.items():  # если параметры входят в vehicle с теми же значениями
+            # если параметры входят в vehicle с теми же значениями
+            if params.items() <= vehicle.__dict__.items():
                 filter_list.append(vehicle)
         return filter_list
 
     def get_vehicle(self, vehicle_id: int) -> Vehicle:
         # получение одного vehicle по id
 
+        # отправляем запрос с id и получаем dict
         vehicle = requests.get(
-            self.url + VehicleManager.vehicles_adress + f'/{vehicle_id}').json()  # отправляе запрос с id и получаем dict
+            self.url + VehicleManager.vehicles_adress + f'/{vehicle_id}').json()
         return Vehicle(**vehicle)
 
     def add_vehicle(self, vehicle: Vehicle) -> None:
@@ -95,6 +97,7 @@ class VehicleManager(ApiManager):
 
         vehicle1 = self.get_vehicle(id)
         # Получаем словарь вида {Расстояние до vehicle с входным id: vehicle от которого посчитано расстояние}
+
         all_distance = {
             self.calc_distance_behavior.calc_distance(vehicle1.longitude, vehicle1.latitude, vehicle2.longitude,
                                                       vehicle2.latitude): vehicle2 for vehicle2 in self.get_vehicles()

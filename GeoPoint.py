@@ -17,7 +17,7 @@ class MyDistanceTwoGeopoints(DistanceTwoGeopoints):
     @staticmethod
     def calc_distance(point1_longitude: float, point1_latitude: float, point2_longitude: float,
                       point2_latitude: float) -> float:
-        R = 6371000.0  # радиус земли в мерах
+        R = 6371000.0  # радиус земли в метрах
 
         # перевод в радианы координат
         lat1 = radians(point1_latitude)
@@ -25,9 +25,11 @@ class MyDistanceTwoGeopoints(DistanceTwoGeopoints):
         lat2 = radians(point2_latitude)
         lon2 = radians(point2_longitude)
 
+        # расстояние между точками
         dlon = lon2 - lon1
         dlat = lat2 - lat1
 
+        # коэффиценты для расчета
         a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
 
